@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 11:18:40 by mniemaz           #+#    #+#             */
-/*   Updated: 2024/12/15 19:28:10 by mniemaz          ###   ########.fr       */
+/*   Updated: 2024/12/15 19:30:14 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,3 +128,5 @@ int	main(void)
 	mlx_mouse_hook(all.vars.win, mouse_hook_func, &all);
 	mlx_loop(all.vars.mlx);
 }
+
+// prochaine etape, recup l'input puis augmenter y avec la hauteur (comme sur le 42 dans le sujet)
