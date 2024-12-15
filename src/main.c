@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 11:18:40 by mniemaz           #+#    #+#             */
-/*   Updated: 2024/12/15 19:09:49 by mniemaz          ###   ########.fr       */
+/*   Updated: 2024/12/15 19:28:10 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,14 @@ void	print_square(t_data *img, int x, int y, int size, int color)
 	}
 }
 
+void	inc_or_decrease(int condition, int *val)
+{
+	if (condition)
+		(*val)++;
+	else
+		(*val)--;
+}
+
 void	print_line(t_all *all, t_pos pos1, t_pos pos2)
 {
 	t_pos	d;
@@ -51,7 +59,7 @@ void	print_line(t_all *all, t_pos pos1, t_pos pos2)
 	d.y = abs(pos2.y - pos1.y);
 	print.x = pos1.x;
 	print.y = pos1.y;
-	
+
 	if (d.x > d.y)
 	{
 		error = 2 * d.y - d.x;
@@ -62,17 +70,11 @@ void	print_line(t_all *all, t_pos pos1, t_pos pos2)
 			my_mlx_pixel_put(&all->img, print.x, print.y, 0x00FF0000);
 			if (error > 0)
 			{
-				if (pos1.y > pos2.y)
-					print.y--;
-				else
-					print.y++;
+				inc_or_decrease(pos1.y < pos2.y, &print.y);
 				error -= 2 * d.x;
 			}
 			error += 2 * d.y;
-			if (pos1.x > pos2.x)
-				print.x--;
-			else
-				print.x++;
+			inc_or_decrease(pos1.x < pos2.x, &print.x);
 		}
 	}
 	else
@@ -84,14 +86,11 @@ void	print_line(t_all *all, t_pos pos1, t_pos pos2)
 			my_mlx_pixel_put(&all->img, print.x, print.y, 0x00FF0000);
 			if (error > 0)
 			{
-				if (pos1.x > pos2.x)
-					print.x--;
-				else
-					print.x++;
+				inc_or_decrease(pos1.x < pos2.x, &print.x);
 				error -= 2 * d.y;
 			}
 			error += 2 * d.x;
-			print.y++;
+			inc_or_decrease(pos1.y < pos2.y, &print.y);
 		}
 	}
 }
@@ -120,7 +119,7 @@ int	main(void)
 	pos1.x = CENTER_X;
 	pos1.y = CENTER_Y;
 	pos2.x = CENTER_X + 200;
-	pos2.y = CENTER_Y + 500;
+	pos2.y = CENTER_Y - 500;
 	print_square(&all.img, pos1.x - 5, pos1.y - 5, 10, 0x00FF0000);
 	print_square(&all.img, pos2.x - 5, pos2.y - 5, 10, 0x00FF0000);
 	print_line(&all, pos1, pos2);
