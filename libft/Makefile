@@ -35,6 +35,7 @@ SRC = ${DIRSRC}ft_atoi.c \
 	  ${DIRSRC}ft_striteri.c \
 	  ${DIRSRC}get_next_line.c \
 	  ${DIRSRC}get_next_line_utils.c \
+	  ${DIRSRC}pos_in_str.c
 
 B_SRC = ${DIRSRC}ft_lstnew_bonus.c \
 		${DIRSRC}ft_lstaddfront_bonus.c \

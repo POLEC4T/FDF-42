@@ -6,21 +6,12 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:47:35 by mniemaz           #+#    #+#             */
-/*   Updated: 2024/12/05 09:48:56 by mniemaz          ###   ########.fr       */
+/*   Updated: 2024/12/19 18:12:07 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-size_t	ft_strlen(const char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
+#include "libft.h"
 
 char	*ft_strndup(const char *s, size_t n)
 {

@@ -7,7 +7,9 @@ CFLAGS=-Wall -Wextra -Werror -I$(INCDIR) -I/usr/include -Imlx_linux -O3
 
 SRCS =	$(SRCDIR)/main.c \
 		$(SRCDIR)/hooks.c \
-		$(SRCDIR)/map_parsing.c
+		$(SRCDIR)/map_parsing.c \
+		$(SRCDIR)/frees.c \
+		$(SRCDIR)/utils.c \
 
 
 OBJS = ${SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o}

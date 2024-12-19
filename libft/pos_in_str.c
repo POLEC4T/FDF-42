@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   pos_in_str.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/19 17:09:02 by mniemaz           #+#    #+#             */
-/*   Updated: 2024/12/19 21:49:34 by mniemaz          ###   ########.fr       */
+/*   Created: 2024/12/19 18:25:51 by mniemaz           #+#    #+#             */
+/*   Updated: 2024/12/19 19:11:24 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+/**
+ * @returns the index of c in str, -1 else
+ */
+int pos_in_str(char *str, char c)
+{
+    int i;
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
-# endif
-
-# include <stdlib.h>
-# include <unistd.h>
-
-char	*get_next_line(int fd);
-char	*ft_strndup(const char *s, size_t n);
-char	*ft_strjoin(char const *s1, char const *s2);
-size_t	ft_strlcpy(char *dst, const char *src, size_t sz);
-int		ft_strchr_idx(const char *s, int c);
-
-#endif
+    i = 0;
+    while(str[i])
+    {
+        if (str[i] == c)
+            return (i);
+        i++;
+    }
+    return (-1);
+}

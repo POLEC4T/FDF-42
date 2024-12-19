@@ -6,17 +6,20 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 16:11:27 by mniemaz           #+#    #+#             */
-/*   Updated: 2024/12/15 16:12:08 by mniemaz          ###   ########.fr       */
+/*   Updated: 2024/12/19 19:48:57 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
-int	key_hook_func(int keycode, t_data *img)
+int	key_hook_func(int keycode, t_all *all)
 {
 	// __builtin_printf("key :%d\n", keycode);
 	if (keycode == 65307)
-		mlx_destroy_window(img->img, img->addr);
+	{
+		// mlx_destroy_window(all->img, all->addr);
+		end_process(all, FREE_ALL, SUCCESS_ESC);
+	}
 	return (0);
 }
 

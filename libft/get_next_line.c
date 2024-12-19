@@ -6,11 +6,12 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 17:06:28 by mniemaz           #+#    #+#             */
-/*   Updated: 2024/12/17 17:46:05 by mniemaz          ###   ########.fr       */
+/*   Updated: 2024/12/19 18:09:52 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "libft.h"
 
 char	*extract_line(char *buffer)
 {

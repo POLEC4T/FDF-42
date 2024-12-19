@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mniemaz <mniemaz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:21:36 by mniemaz           #+#    #+#             */
-/*   Updated: 2024/11/15 15:59:08 by mniemaz          ###   ########.fr       */
+/*   Updated: 2024/12/19 18:32:11 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int					ft_tolower(int c);
 char				*ft_strtrim(char const *s1, char const *set);
 char				*ft_itoa(int n);
 char				*ft_strjoin(char const *s1, char const *s2);
-char				**ft_split(char const *s, char c);
+char				**ft_split(char const *s, char *delim);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
 int					ft_putchar_fd(char c, int fd);
@@ -69,5 +69,6 @@ void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
+int					pos_in_str(char *str, char c);
 
 #endif
