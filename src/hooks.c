@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 16:11:27 by mniemaz           #+#    #+#             */
-/*   Updated: 2024/12/19 19:48:57 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/10 16:25:01 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	mouse_hook_func(int button, int x, int y, void *param)
 {
 	t_all *all = (t_all *)param; // Cast en t_all
 	__builtin_printf("btn:%d x:%d y:%d\n", button, x, y);
-	print_square(&all->img, x - 10, y - 10, 20, 0x00FF0000);
 	mlx_put_image_to_window(all->vars.mlx, all->vars.win, all->img.img, 0, 0);
 	return (0);
 }

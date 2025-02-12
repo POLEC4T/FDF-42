@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 11:13:57 by mniemaz           #+#    #+#             */
-/*   Updated: 2024/12/19 23:24:45 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/12 13:30:07 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,17 @@ void	free_tab_str(char **tab)
 	free(tab);
 }
 
-void	free_map(t_map *map)
+void	free_heights(t_map *map, int limit)
 {
 	int	i;
 
 	i = 0;
-	while (i < map->nb_rows)
+	while (i < limit)
 	{
-		free(map->values[i]);
+		free(map->heights[i]);
 		i++;
 	}
-	free(map->values);
+	free(map->heights);
 }
 
 void	free_mlx(t_all *all)
@@ -48,6 +48,19 @@ void	free_mlx(t_all *all)
 
 void	free_map_content(t_all *all)
 {
-	free(all->map.row_lengths);
-	free_map(&all->map);
+	// free(all->map.row_lengths);
+	free_heights(&all->map, all->map.nb_rows);
+}
+
+void free_pos2d(t_map *map, int limit)
+{
+	int	i;
+
+	i = 0;
+	while (i < limit)
+	{
+		free(map->pos2d[i]);
+		i++;
+	}
+	free(map->pos2d);
 }

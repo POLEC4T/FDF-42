@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 20:01:43 by mniemaz           #+#    #+#             */
-/*   Updated: 2024/12/19 22:33:33 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/12 12:02:45 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,46 +27,60 @@ int	is_number_valid(char *str)
 	return (ft_strlen(str) == i);
 }
 
+void exit_invalid_map(char *line, char **str_heights)
+{
+	free(line);
+	free_tab_str(str_heights);
+	print_msg(ERROR_INV_MAP);
+	exit(1);
+}
+
+/**
+ * @brief 
+ * - Checks if the line is valid:
+ * 	- inv if the line has a different number of columns than the previous one
+ * 	- inv if the line has an invalid number (see function is_number_valid)
+ * - increments the number of rows
+ */
+void	process_check_line(char *line, t_map *map)
+{
+	char	**str_heights;
+	int		nb_cols_prev_line;
+
+	str_heights = ft_split(line, " \n");
+	if (strtab_len_valid_nbs(str_heights) != strtab_len(str_heights))
+		exit_invalid_map(line, str_heights);
+	nb_cols_prev_line = map->nb_cols;
+	map->nb_cols = strtab_len(str_heights);
+	if (map->nb_cols != nb_cols_prev_line && map->nb_rows > 0)
+		exit_invalid_map(line, str_heights);
+	map->nb_rows++;
+	free_tab_str(str_heights);
+}
+
+/**
+ * @brief
+ * - Check the map file, the file is invalid if:
+ * 	- a line has a different number of columns than the previous one
+ * 	- a line has an invalid number (see function is_number_valid)
+ * - Set the sizes of the map (nb_rows, nb_cols)
+ */
 void	check_map(char *filename, t_map *map)
 {
-	char	**str_values;
 	char	*line;
-	int		max_nb_vals;
-	int		count_max;
 	int		fd;
 
 	map->nb_rows = 0;
-	max_nb_vals = INT_MIN;
-	count_max = 0;
-	fd = open(filename, O_RDONLY);
+	map->nb_cols = 0;
+	fd = open_map_file(filename);
 	if (fd < 0)
-	{
-		print_msg(ERROR_NO_FILE);
 		exit(1);
-	}
 	line = get_next_line(fd);
 	while (line)
 	{
-		str_values = ft_split(line, " \n");
-		if (strtab_len_valid_nbs(str_values) != strtab_len(str_values))
-		{
-			free(line);
-			free_tab_str(str_values);
-			print_msg(ERROR_INV_MAP);
-			exit(1);
-		}
-		map->len_biggest_row = strtab_len(str_values);
-		if (map->len_biggest_row > max_nb_vals)
-		{
-			if (count_max > 1)
-				write(1, "Warning, lines are not the same size", 1);
-			max_nb_vals = map->len_biggest_row;
-			count_max++;
-		}
-		map->nb_rows++;
+		process_check_line(line, map);
 		free(line);
 		line = get_next_line(fd);
-		free_tab_str(str_values);
 	}
-	map->len_biggest_row = max_nb_vals;
+	close(fd);
 }

@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 11:18:40 by mniemaz           #+#    #+#             */
-/*   Updated: 2024/12/19 23:26:55 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/12 12:28:36 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,14 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
+	// int		pixel;
+	(void)dst;
+	(void)color;
 	if (x < 0 || x >= WIN_SIZE_X || y < 0 || y >= WIN_SIZE_Y)
 		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	// __builtin_printf("[%d,%d] \n", x - CENTER_X, y - CENTER_Y);
 	*(unsigned int *)dst = color;
-}
-
-void	print_square(t_data *img, int x, int y, int size, int color)
-{
-	int	j;
-	int	i;
-
-	j = 0;
-	i = 0;
-	while (i < size)
-	{
-		j = 0;
-		while (j < size)
-		{
-			my_mlx_pixel_put(img, x + i, y + j, color);
-			j++;
-		}
-		i++;
-	}
 }
 
 void	inc_or_decrease(int condition, int *val)
@@ -49,39 +34,32 @@ void	inc_or_decrease(int condition, int *val)
 		(*val)--;
 }
 
-void	print_line(t_all *all, t_pos pos1, t_pos pos2)
+void	bresenham_line(t_pos pos1, t_pos pos2, t_all *all)
 {
-	t_pos	d;
-	t_pos	print;
-	int		error;
+	int	dx;
+	int	dy;
+	int	err;
+	int	temp_err;
 
-	d.x = abs(pos2.x - pos1.x);
-	d.y = abs(pos2.y - pos1.y);
-	print.x = pos1.x;
-	print.y = pos1.y;
-	error = 2 * d.y - d.x;
-	while (d.x > d.y && print.x != pos2.x)
+	dx = abs(pos2.x - pos1.x);
+	dy = abs(pos2.y - pos1.y);
+	err = dx - dy;
+	while (1)
 	{
-		my_mlx_pixel_put(&all->img, print.x, print.y, 0x00FF0000);
-		if (error > 0)
+		my_mlx_pixel_put(&all->img, pos1.x, pos1.y, 0xFFFFFF);
+		if (pos1.x == pos2.x && pos1.y == pos2.y)
+			break ;
+		temp_err = 2 * err;
+		if (temp_err > -dy)
 		{
-			inc_or_decrease(pos1.y < pos2.y, &print.y);
-			error -= 2 * d.x;
+			err -= dy;
+			inc_or_decrease(pos1.x < pos2.x, &pos1.x);
 		}
-		error += 2 * d.y;
-		inc_or_decrease(pos1.x < pos2.x, &print.x);
-	}
-	error = 2 * d.x - d.y;
-	while (d.x <= d.y && print.y != pos2.y)
-	{
-		my_mlx_pixel_put(&all->img, print.x, print.y, 0x00FF0000);
-		if (error > 0)
+		if (temp_err < dx)
 		{
-			inc_or_decrease(pos1.x < pos2.x, &print.x);
-			error -= 2 * d.y;
+			err += dx;
+			inc_or_decrease(pos1.y < pos2.y, &pos1.y);
 		}
-		error += 2 * d.x;
-		inc_or_decrease(pos1.y < pos2.y, &print.y);
 	}
 }
 
@@ -98,44 +76,6 @@ t_all	my_init_mlx(void)
 	return (all);
 }
 
-void	init_map(t_all *all, char *filename)
-{
-	int		fd;
-	char	*line;
-	char	**str_values;
-	int		row_values;
-	int		i_str_values;
-	int		col_values;
-
-	all->map.values = malloc(sizeof(int *) * all->map.nb_rows);
-	if (!all->map.values)
-		end_process(all, FREE_MLX, ERROR_MALLOC_BROKE);
-	all->map.row_lengths = malloc(sizeof(int) * all->map.nb_rows);
-	if (!all->map.row_lengths)
-		end_process(all, FREE_MLX, ERROR_MALLOC_BROKE);
-	fd = open(filename, O_RDONLY);
-	line = get_next_line(fd);
-	row_values = 0;
-	while (line)
-	{
-		str_values = ft_split(line, " \n");
-		all->map.values[row_values] = malloc(strtab_len_valid_nbs(str_values)
-				* sizeof(int));
-		i_str_values = 0;
-		col_values = 0;
-		while (str_values[i_str_values])
-		{
-			all->map.values[row_values][col_values] = ft_atoi(str_values[i_str_values]);
-			col_values++;
-			i_str_values++;
-		}
-		all->map.row_lengths[row_values] = col_values;
-		free(line);
-		line = get_next_line(fd);
-		free_tab_str(str_values);
-		row_values++;
-	}
-}
 
 void	print_map_terminal(t_map *map)
 {
@@ -146,9 +86,9 @@ void	print_map_terminal(t_map *map)
 	while (row < map->nb_rows)
 	{
 		col = 0;
-		while (col < map->len_biggest_row)
+		while (col < map->nb_cols)
 		{
-			__builtin_printf("%d ", map->values[row][col]);
+			__builtin_printf("%d ", map->heights[row][col]);
 			col++;
 		}
 		__builtin_printf("\n");
@@ -160,79 +100,211 @@ void	end_process(t_all *all, enum free_mode free_mode, enum msg_ids msg_id)
 {
 	if (free_mode == FREE_MLX)
 		free_mlx(all);
-	else if (free_mode == FREE_MAP)
-		free_map_content(all);
+	else if (free_mode == FREE_HEIGHTS)
+		free_heights(&all->map, all->map.nb_rows);
+	else if (free_mode == FREE_POS2D)
+		free_pos2d(&all->map, all->map.nb_rows);
+	else if (free_mode == FREE_HEIGHTS_MLX)
+	{
+		free_mlx(all);
+		free_heights(&all->map, all->map.nb_rows);
+	}
 	else if (free_mode == FREE_ALL)
 	{
 		free_mlx(all);
-		free_map_content(all);
+		free_heights(&all->map, all->map.nb_rows);
+		free_pos2d(&all->map, all->map.nb_rows);
 	}
 	print_msg(msg_id);
 	exit_acc_to_msg_id(msg_id);
 }
 
-void	values_wlk(t_all *all)
+t_pos	iso_proj(int x, int y, int z, t_map *map)
 {
-	int	row;
-	int	col;
+	t_pos	pos2d;
+
+	// Calcul des coordonnées isométriques
+	pos2d.x = (x - y) * map->step;
+	pos2d.y = (x + y) * (map->step / 2) - z * 20;
+	return (pos2d);
+}
+
+t_pos	iso_proj2(int x, int y, int z, t_map *map)
+{
+	t_pos	pos2d;
+
+	(void)map;
+	pos2d.x = (x - y) * 0.9; // 0.9 = cos(PI / 6) // cos(PI / 6) * x - cos(PI / 6) * y
+	pos2d.y = ((x + y) * 0.5 - z * 3); // 0.5 = sin(PI / 6)
+	return (pos2d);
+}
+
+void	z_rotate(t_pos *pos, double angle, t_all *all)
+{
+	double	x;
+	double	y;
+	t_pos	dist_to_origin;
+
+	(void)all;
+	dist_to_origin.x = CENTER_X;
+	dist_to_origin.y = CENTER_Y;
+	x = pos->x - dist_to_origin.x;
+	y = pos->y - dist_to_origin.y;
+	pos->x = x * cos(angle) - y * sin(angle) + dist_to_origin.x;
+	pos->y = x * sin(angle) + y * cos(angle) + dist_to_origin.y;
+}
+
+
+
+void	x_rotate(t_pos *pos, int *height, double angle, t_all *all)
+{
+	double	y;
+	double	z;
+	t_pos	dist_to_origin;
+
+	(void)all;
+	dist_to_origin.x = CENTER_X;
+	dist_to_origin.y = CENTER_Y;
+	y = pos->y - dist_to_origin.y;
+	z = *height * all->map.height_multiplier;
+	pos->y = y * cos(angle) - z * sin(angle) + dist_to_origin.y;
+	*height = y * sin(angle) + z * cos(angle);
+}
+
+void	draw_lines(t_all *all)
+{
+	int		row;
+	int		col;
 
 	row = 0;
-	__builtin_printf("My map:\n");
+	printf("My map:");
 	while (row < all->map.nb_rows)
 	{
 		col = 0;
-		while (col < all->map.row_lengths[row])
+		printf("\n");
+		while (col < all->map.nb_cols)
 		{
-			__builtin_printf("%d ", all->map.values[row][col]);
+			printf("%d ", all->map.heights[row][col]);
+			if (col != all->map.nb_cols - 1)
+				bresenham_line(all->map.pos2d[row][col], all->map.pos2d[row][col + 1], all);
+			if (row != all->map.nb_rows - 1)
+				bresenham_line(all->map.pos2d[row][col], all->map.pos2d[row + 1][col], all);
 			col++;
 		}
-		__builtin_printf("\n");
 		row++;
 	}
-	__builtin_printf("\n");
+}
+
+void print_square(t_all *all, t_pos pos, int size, int color)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (i < size)
+	{
+		j = 0;
+		while (j < size)
+		{
+			my_mlx_pixel_put(&all->img, pos.x + i, pos.y + j, color);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	prepare_map(t_all *all)
+{
+	int row;
+	int col;
+	// t_pos pos1;
+	double z_angle;
+	double x_angle;
+
+	row = 0;
+	x_angle = 3.141592 / 6;
+	z_angle = 3.141592 / 6;
+	while (row < all->map.nb_rows)
+	{
+		col = 0;
+		while (col < all->map.nb_cols)
+		{
+			all->map.pos2d[row][col].x = all->map.origin.x + col * all->map.step;
+			all->map.pos2d[row][col].y = all->map.origin.y + row * all->map.step;
+			z_rotate(&all->map.pos2d[row][col], z_angle, all);
+			x_rotate(&all->map.pos2d[row][col], &all->map.heights[row][col], x_angle, all);
+			col++;
+		}
+		row++;
+	}
+}
+
+int min(int a, int b)
+{
+	if (a < b)
+		return (a);
+	return (b);
 }
 
 int	display_plan(t_all *all)
 {
-	// t_line	*lines;
-	all->map.origin.x = CENTER_X;
-	all->map.origin.y = 100;
-	all->map.x_step = 40;
-	all->map.y_step = 30;
-	values_wlk(all);
+	
+	int step_x;
+	int step_y;
+
+	step_x = WIN_SIZE_X / all->map.nb_cols;
+	step_y = WIN_SIZE_Y / all->map.nb_rows;
+
+	all->map.step = min(step_x, step_y) * 0.7;
+	all->map.origin.x = CENTER_X - (all->map.nb_cols * all->map.step) / 2 + all->map.step / 2;
+	all->map.origin.y = CENTER_Y - (all->map.nb_rows * all->map.step) / 2 + all->map.step / 2;
+	all->map.height_multiplier = 5;
+	// print_square(all, all->map.origin, 10, 0xFF0000);
+	prepare_map(all);
+	draw_lines(all);
 	return (0);
 }
+
+// infos :
+// - taille de la fenetre : 1920 x 1080
+// - le nombre de colonnes et de lignes de la map
+
+int	my_loop(t_all *all)
+{
+	__builtin_printf("loop\n");
+	display_plan(all);
+	return (0);
+}
+
+
 
 int	main(int ac, char **av)
 {
 	t_all	all;
 	t_map	map;
+	t_pos	pos1;
+	t_pos	pos2;
 
-	// t_pos	pos1;
-	// t_pos	pos2;
 	(void)**av;
 	(void)ac;
 	if (ac != 2)
-		return (0);
+	{
+		if (ac == 1)
+			print_msg(ERROR_NO_MAP);
+		else
+			print_msg(ERROR_TOO_MANY_ARGS);
+		exit(1);
+	}
 	check_map(av[1], &map);
+	init_map(&map, av[1]);
 	all = my_init_mlx();
 	all.map = map;
-	init_map(&all, av[1]);
-	// pos1.x = CENTER_X;
-	// pos1.y = CENTER_Y;
-	// pos2.x = CENTER_X + 500;
-	// pos2.y = CENTER_Y + 500;
-	// print_square(&all.img, pos1.x - 5, pos1.y - 5, 10, 0x00FF0000);
-	// print_square(&all.img, pos2.x - 5, pos2.y - 5, 10, 0x00FF0000);
-	// print_line(&all, pos1, pos2);
-	// __builtin_printf("val:%d \n", map.values[1][1]);
+	pos1.x = CENTER_X;
+	pos1.y = CENTER_Y;
+	pos2.x = CENTER_X + 60;
+	pos2.y = CENTER_Y - 50;
 	display_plan(&all);
-	print_map_terminal(&all.map);
-	// mlx_put_image_to_window(all.vars.mlx, all.vars.win, all.img.img, 0, 0);
-	// mlx_mouse_hook(all.vars.win, mouse_hook_func, &all);
+	mlx_put_image_to_window(all.vars.mlx, all.vars.win, all.img.img, 0, 0);
 	mlx_key_hook(all.vars.win, key_hook_func, &all);
 	mlx_loop(all.vars.mlx);
 }
-
-// prochaine etape,
-// FIX LEAKS

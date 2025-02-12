@@ -10,6 +10,7 @@ SRCS =	$(SRCDIR)/main.c \
 		$(SRCDIR)/map_parsing.c \
 		$(SRCDIR)/frees.c \
 		$(SRCDIR)/utils.c \
+		$(SRCDIR)/inits.c
 
 
 OBJS = ${SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o}

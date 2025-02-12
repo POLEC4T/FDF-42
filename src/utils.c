@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:59:05 by mniemaz           #+#    #+#             */
-/*   Updated: 2024/12/19 22:12:04 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/12 11:40:46 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,17 @@ void	print_msg(enum msg_ids id)
 		write(1, "Successfully exited with ESC.\n", 30);
 	if (id == ERROR_INV_MAP)
 		write(2, "Error: The provided map is invalid.\n", 37);
+	if (id == ERROR_INV_MAP_ROW_LEN)
+		write(2, "Error: The provided map has invalid row lengths.\n", 50);
 	if (id == ERROR_NO_FILE)
 		write(2, "Error: The provided file does not exist.\n", 41);
 	if (id == ERROR_MALLOC_BROKE)
 		write(2, "Error: A malloc broke, crazy in'it ?\n", 36);
+	if (id == ERROR_NO_MAP)
+		write(2, "Error: Please provide a map file.\n", 34);
+	if (id == ERROR_TOO_MANY_ARGS)
+		write(2, "Error: Too many arguments provided.\n", 37);
+	
 }
 
 void	exit_acc_to_msg_id(enum msg_ids id)
@@ -64,4 +71,14 @@ void	exit_acc_to_msg_id(enum msg_ids id)
 		exit (1);
 	else if (id == SUCCESS_ESC)
 		exit(0);
+}
+
+int open_map_file(char *filename)
+{
+	int	fd;
+
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		perror("Error opening file");
+	return (fd);
 }
