@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 11:11:36 by mniemaz           #+#    #+#             */
-/*   Updated: 2024/12/19 19:12:10 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/13 16:48:01 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	calc_nb_words(char const *s, char *delim)
 	while (s[i])
 	{
 		if ((pos_in_str(delim, s[i])) == -1 && ((pos_in_str(delim, s[i
-						+ 1])) >= 0 || s[i + 1] == '\0'))
+							+ 1])) >= 0 || s[i + 1] == '\0'))
 			counter++;
 		i++;
 	}

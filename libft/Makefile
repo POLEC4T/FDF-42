@@ -1,10 +1,12 @@
 SRC = ${DIRSRC}ft_atoi.c \
+	  ${DIRSRC}ft_atoui_base.c \
 	  ${DIRSRC}ft_bzero.c \
 	  ${DIRSRC}ft_calloc.c \
 	  ${DIRSRC}ft_isalnum.c \
 	  ${DIRSRC}ft_isalpha.c \
 	  ${DIRSRC}ft_isascii.c \
 	  ${DIRSRC}ft_isdigit.c \
+	  ${DIRSRC}ft_is_digitbase.c \
 	  ${DIRSRC}ft_isprint.c \
 	  ${DIRSRC}ft_memchr.c \
 	  ${DIRSRC}ft_memcmp.c \
@@ -22,6 +24,7 @@ SRC = ${DIRSRC}ft_atoi.c \
 	  ${DIRSRC}ft_substr.c \
 	  ${DIRSRC}ft_tolower.c \
 	  ${DIRSRC}ft_toupper.c \
+	  ${DIRSRC}ft_str_toupper.c \
 	  ${DIRSRC}ft_substr.c \
 	  ${DIRSRC}ft_strjoin.c \
 	  ${DIRSRC}ft_strtrim.c \

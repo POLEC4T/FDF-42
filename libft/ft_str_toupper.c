@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_str_toupper.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/06 14:23:14 by niemazm           #+#    #+#             */
-/*   Updated: 2025/02/13 16:47:39 by mniemaz          ###   ########.fr       */
+/*   Created: 2024/11/04 16:34:27 by mniemaz           #+#    #+#             */
+/*   Updated: 2025/02/13 16:59:38 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_putstr_fd(char *s, int fd)
+char	*ft_str_toupper(char *str)
 {
-	if (!s)
-		return (ft_putstr_fd("(null)", fd));
-	return (write(fd, s, ft_strlen(s)));
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		str[i] = ft_toupper(str[i]);
+		i++;
+	}
+	return (str);
 }

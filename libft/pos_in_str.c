@@ -6,23 +6,23 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 18:25:51 by mniemaz           #+#    #+#             */
-/*   Updated: 2024/12/19 19:11:24 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/13 16:45:43 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /**
  * @returns the index of c in str, -1 else
  */
-int pos_in_str(char *str, char c)
+int	pos_in_str(char *str, char c)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while(str[i])
-    {
-        if (str[i] == c)
-            return (i);
-        i++;
-    }
-    return (-1);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (i);
+		i++;
+	}
+	return (-1);
 }

@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:21:36 by mniemaz           #+#    #+#             */
-/*   Updated: 2024/12/19 18:32:11 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/13 16:59:56 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,15 @@ size_t				ft_strlcat(char *dst, const char *src, size_t sz);
 char				*ft_strdup(const char *s);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 int					ft_atoi(const char *str);
+unsigned int		ft_atoui_base(const char *nptr, char *base);
+int					ft_isdigit_base(char c, int base);
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
 int					ft_isalnum(int c);
 int					ft_isascii(int c);
 int					ft_isprint(int c);
 int					ft_toupper(int c);
+char				*ft_str_toupper(char *str);
 int					ft_tolower(int c);
 char				*ft_strtrim(char const *s1, char const *set);
 char				*ft_itoa(int n);
