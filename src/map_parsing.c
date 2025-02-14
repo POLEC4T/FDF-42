@@ -6,40 +6,60 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 20:01:43 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/12 12:02:45 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/14 19:06:02 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 #include "../libft/libft.h"
 
-int	is_number_valid(char *str)
+int	iterate_number_part(char *str)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	if (str[i] && (str[i] == '-' || str[i] == '+'))
 		i++;
-	// else if (str[i] && str[i + 1] && str[i] == '0' && str[i + 1] == 'x')
-	// 	i = 2;
 	while (str[i] && ft_isdigit(str[i]))
 		i++;
-	return (ft_strlen(str) == i);
+	return (i);
 }
 
-void exit_invalid_map(char *line, char **str_heights)
+int	iterate_hex_part(char *str)
 {
-	free(line);
-	free_tab_str(str_heights);
-	print_msg(ERROR_INV_MAP);
-	exit(1);
+	int	i;
+
+	i = 0;
+	if (str[i] && str[i] == '0' && str[i + 1] && str[i + 1] == 'x')
+	{
+		i += 2;
+		while (str[i] && ft_isdigit_base(str[i], 16))
+			i++;
+	}
+	return (i);
+}
+
+int	is_element_valid(char *str)
+{
+	int	i_nb;
+	int	i_hex;
+	int	len_nb_hex;
+
+	i_hex = 0;
+	i_nb = iterate_number_part(str);
+	if (str[i_nb] == ',')
+		i_hex++;
+	i_hex += iterate_hex_part(str + i_nb + i_hex);
+	len_nb_hex = i_hex - 3;
+	return ((int)ft_strlen(str) == i_nb + i_hex && len_nb_hex <= MAX_HEX_LEN
+		&& (!(len_nb_hex <= 0 && i_hex > 0)));
 }
 
 /**
- * @brief 
+ * @brief
  * - Checks if the line is valid:
  * 	- inv if the line has a different number of columns than the previous one
- * 	- inv if the line has an invalid number (see function is_number_valid)
+ * 	- inv if the line has an invalid element (see function is_element_valid)
  * - increments the number of rows
  */
 void	process_check_line(char *line, t_map *map)
@@ -48,7 +68,7 @@ void	process_check_line(char *line, t_map *map)
 	int		nb_cols_prev_line;
 
 	str_heights = ft_split(line, " \n");
-	if (strtab_len_valid_nbs(str_heights) != strtab_len(str_heights))
+	if (strtab_len_valid_elems(str_heights) != strtab_len(str_heights))
 		exit_invalid_map(line, str_heights);
 	nb_cols_prev_line = map->nb_cols;
 	map->nb_cols = strtab_len(str_heights);
@@ -62,7 +82,7 @@ void	process_check_line(char *line, t_map *map)
  * @brief
  * - Check the map file, the file is invalid if:
  * 	- a line has a different number of columns than the previous one
- * 	- a line has an invalid number (see function is_number_valid)
+ * 	- a line has an invalid element (see function is_element_valid)
  * - Set the sizes of the map (nb_rows, nb_cols)
  */
 void	check_map(char *filename, t_map *map)

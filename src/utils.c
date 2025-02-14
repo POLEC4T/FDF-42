@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:59:05 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/12 11:40:46 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/14 19:08:28 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int	strtab_len(char **strtab)
 }
 
 /**
- * @returns the the number of valid numbers in strtab
- * @example ["123", "123", "abc"] => 2
+ * @returns the the number of valid elems in strtab
+ * @example ["123", "123", "5,0x123", "abc", ] => 3
  */
-int	strtab_len_valid_nbs(char **strtab)
+int	strtab_len_valid_elems(char **strtab)
 {
 	int	i;
 	int	count;
@@ -39,17 +39,19 @@ int	strtab_len_valid_nbs(char **strtab)
 	count = 0;
 	while (strtab[i])
 	{
-		if (is_number_valid(strtab[i]))
+		if (is_element_valid(strtab[i]))
 			count++;
 		i++;
 	}
 	return (count);
 }
 
-void	print_msg(enum msg_ids id)
+void	print_msg(enum e_msg_ids id)
 {
-	if (id == SUCCESS_ESC)
+	if (id == SUCCESS_EXIT_ESC)
 		write(1, "Successfully exited with ESC.\n", 30);
+	if (id == SUCCESS_EXIT_CROSS)
+		write(1, "Successfully exited with top right cross.\n", 42);
 	if (id == ERROR_INV_MAP)
 		write(2, "Error: The provided map is invalid.\n", 37);
 	if (id == ERROR_INV_MAP_ROW_LEN)
@@ -62,18 +64,9 @@ void	print_msg(enum msg_ids id)
 		write(2, "Error: Please provide a map file.\n", 34);
 	if (id == ERROR_TOO_MANY_ARGS)
 		write(2, "Error: Too many arguments provided.\n", 37);
-	
 }
 
-void	exit_acc_to_msg_id(enum msg_ids id)
-{
-	if (id == ERROR_INV_MAP || id == ERROR_NO_FILE || id == ERROR_MALLOC_BROKE)
-		exit (1);
-	else if (id == SUCCESS_ESC)
-		exit(0);
-}
-
-int open_map_file(char *filename)
+int	open_map_file(char *filename)
 {
 	int	fd;
 

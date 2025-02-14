@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 11:13:57 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/12 13:30:07 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/14 19:00:43 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,19 @@ void	free_heights(t_map *map, int limit)
 	free(map->heights);
 }
 
+void	free_colors(t_map *map, int limit)
+{
+	int	i;
+
+	i = 0;
+	while (i < limit)
+	{
+		free(map->colors[i]);
+		i++;
+	}
+	free(map->colors);
+}
+
 void	free_mlx(t_all *all)
 {
 	mlx_destroy_image(all->vars.mlx, all->img.img);
@@ -46,13 +59,7 @@ void	free_mlx(t_all *all)
 	free(all->vars.mlx);
 }
 
-void	free_map_content(t_all *all)
-{
-	// free(all->map.row_lengths);
-	free_heights(&all->map, all->map.nb_rows);
-}
-
-void free_pos2d(t_map *map, int limit)
+void	free_pos2d(t_map *map, int limit)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 11:17:59 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/12 13:30:30 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/14 19:14:15 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,15 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-# define WIN_SIZE_X 1920
-# define WIN_SIZE_Y 1080
-# define CENTER_X WIN_SIZE_X / 2
-# define CENTER_Y WIN_SIZE_Y / 2
+# define WIN_SIZE_X 3000
+# define WIN_SIZE_Y 2000
+# define MAX_HEX_LEN 8
+# define M_PI 3.14159265358979323846
 
-enum		free_mode
+enum			e_msg_ids
 {
-	FREE_ALL,
-	FREE_HEIGHTS,
-	FREE_MLX,
-	FREE_POS2D,
-	FREE_HEIGHTS_MLX,
-	NO_FREE
-};
-
-enum		msg_ids
-{
-	SUCCESS_ESC,
+	SUCCESS_EXIT_ESC,
+	SUCCESS_EXIT_CROSS,
 	ERROR_INV_MAP,
 	ERROR_INV_MAP_ROW_LEN,
 	ERROR_NO_FILE,
@@ -50,65 +41,103 @@ enum		msg_ids
 
 typedef struct s_data
 {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}			t_data;
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+}				t_data;
 
 typedef struct s_pos
 {
-	int		x;
-	int		y;
-}			t_pos;
+	int			x;
+	int			y;
+}				t_pos;
+
+typedef struct s_color
+{
+	int			r;
+	int			g;
+	int			b;
+}				t_color;
 
 typedef struct s_line
 {
-	t_pos	pos1;
-	t_pos	pos2;
-}			t_line;
+	t_pos		from;
+	t_pos		to;
+}				t_line;
+
+typedef struct s_step_colors
+{
+	double		r;
+	double		g;
+	double		b;
+}				t_step_colors;
+
+typedef struct s_grid_pos
+{
+	int			row;
+	int			col;
+}				t_grid_pos;
 
 typedef struct s_vars
 {
-	void	*mlx;
-	void	*win;
-}			t_vars;
+	void		*mlx;
+	void		*win;
+}				t_vars;
 
 typedef struct s_map
 {
-	t_pos	origin;
-	int		step;
-	int		height_multiplier;
-	int		**heights;
-	t_pos	**pos2d;
-	int		nb_rows;
-	int		nb_cols;
-}			t_map;
+	t_pos		origin;
+	int			step;
+	int			height_multiplier;
+	int			**heights;
+	t_color		**colors;
+	t_pos		**pos2d;
+	int			nb_rows;
+	int			nb_cols;
+}				t_map;
 
 typedef struct s_all
 {
-	t_vars	vars;
-	t_data	img;
-	t_map	map;
-}			t_all;
+	t_vars		vars;
+	t_data		img;
+	t_map		map;
+}				t_all;
 
-int			key_hook_func(int keycode, t_all *img);
-int			mouse_hook_func(int button, int x, int y, void *param);
-void		check_map(char *filename, t_map *map);
-void		free_tab_str(char **tab);
-void		free_heights(t_map *map, int limit);
-void		end_process(t_all *all, enum free_mode free_mode,
-				enum msg_ids msg_id);
-int			strtab_len(char **strlst);
-int			strtab_len_valid_nbs(char **strtab);
-int			is_number_valid(char *str);
-void		print_msg(enum msg_ids id);
-void		exit_acc_to_msg_id(enum msg_ids id);
-void		free_mlx(t_all *all);
-void		free_map_content(t_all *all);
-void		free_pos2d(t_map *map, int limit);
-void		init_map(t_map *map, char *filename);
-int			open_map_file(char *filename);
+int				key_hook_func(int keycode, t_all *img);
+void			check_map(char *filename, t_map *map);
+void			free_tab_str(char **tab);
+void			free_heights(t_map *map, int limit);
+void			end_process(t_all *all, enum e_msg_ids msg_id);
+int				strtab_len(char **strlst);
+int				strtab_len_valid_elems(char **strtab);
+int				is_element_valid(char *str);
+void			print_msg(enum e_msg_ids id);
+void			exit_acc_to_msg_id(enum e_msg_ids id);
+void			free_mlx(t_all *all);
+void			free_colors(t_map *map, int limit);
+void			free_pos2d(t_map *map, int limit);
+void			init_map(t_map *map, char *filename);
+int				open_map_file(char *filename);
+void			exit_alloc_error(char *line, char **str_line_elems, t_map *map,
+					int row_elems);
+int				rgb_to_int(t_color color);
+t_color			int_to_rgb(int color);
+void			z_rotate(t_pos *pos, double angle, t_all *all);
+void			x_rotate(t_pos *pos, int *height, double angle, t_all *all);
+t_step_colors	calc_step_colors(t_all *all, t_grid_pos pos1, t_grid_pos pos2);
+t_color			calc_color(t_all *all, t_grid_pos pos1, int i,
+					t_step_colors step_colors);
+void			inc_or_decrease(int condition, int *val);
+void			process_bresenham_calc(t_line *line, t_pos d, int *err);
+int				bresenham_line_counter(t_line line);
+void			bresenham_line(t_all *all, t_grid_pos cell_from,
+					t_grid_pos cell_to);
+void			my_mlx_pixel_put(t_data *data, t_pos pos, int color);
+void			my_init_mlx(t_all *all);
+int				exit_cross(t_all *all);
+int				display_plan(t_all *all);
+void			exit_invalid_map(char *line, char **str_heights);
 
 #endif

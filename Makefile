@@ -10,6 +10,13 @@ SRCS =	$(SRCDIR)/main.c \
 		$(SRCDIR)/map_parsing.c \
 		$(SRCDIR)/frees.c \
 		$(SRCDIR)/utils.c \
+		$(SRCDIR)/utils_inits.c \
+		$(SRCDIR)/utils_color.c \
+		$(SRCDIR)/3d_rotates.c \
+		$(SRCDIR)/exit.c \
+		$(SRCDIR)/bresenham.c \
+		$(SRCDIR)/my_mlx.c \
+		$(SRCDIR)/display.c \
 		$(SRCDIR)/inits.c
 
 
@@ -23,7 +30,7 @@ $(NAME): $(OBJS) Makefile
 	$(MAKE) -C libft
 	$(CC) $(OBJS) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz ./libft/libft.a -o $(NAME) -g
 
-$(OBJDIR)/%.o : $(SRCDIR)/%.c | $(OBJDIR)
+$(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCDIR)/fdf.h | $(OBJDIR)
 	$(CC) $(CFLAGS) -c $< -o $@ -g
 
 $(OBJDIR):
