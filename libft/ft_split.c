@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 11:11:36 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/13 16:48:01 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/17 17:58:33 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,18 +98,3 @@ char	**ft_split(char const *s, char *delim)
 	res[nb_words] = NULL;
 	return (res);
 }
-
-// int	main(void)
-// {
-// 	char	*str;
-// 	char	**tab_str;
-// 	int		i;
-
-// 	str = "la laa";
-// 	tab_str = ft_split(str, " l");
-// 	i = -1;
-// 	__builtin_printf("====\n");
-// 	while (tab_str[++i])
-// 		__builtin_printf("%s\n", tab_str[i]);
-// 	free_str_tab(tab_str, i);
-// }

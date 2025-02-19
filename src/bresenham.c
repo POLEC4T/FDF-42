@@ -6,37 +6,43 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:39:07 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/14 18:58:53 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/19 16:44:00 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
-void	inc_or_decrease(int condition, int *val)
-{
-	if (condition)
-		(*val)++;
-	else
-		(*val)--;
-}
-
-void	process_bresenham_calc(t_line *line, t_pos d, int *err)
+/**
+ * @brief Process the Bresenham calculation (used in bresenham algorithm)
+ */
+static int	process_bresenham_calc(t_line *line, t_pos d, int err)
 {
 	int	temp_err;
 
-	temp_err = 2 * *err;
+	temp_err = 2 * err;
 	if (temp_err > -d.y)
 	{
-		*err -= d.y;
-		inc_or_decrease(line->from.x < line->to.x, &line->from.x);
+		err -= d.y;
+		if (line->from.x < line->to.x)
+			line->from.x++;
+		else
+			line->from.x--;
 	}
 	if (temp_err < d.x)
 	{
-		*err += d.x;
-		inc_or_decrease(line->from.y < line->to.y, &line->from.y);
+		err += d.x;
+		if (line->from.y < line->to.y)
+			line->from.y++;
+		else
+			line->from.y--;
 	}
+	return (err);
 }
 
+/**
+ * @returns the number of pixels that would be drawn by the
+ * Bresenham algorithm for a given line
+ */
 int	bresenham_line_counter(t_line line)
 {
 	t_pos	d;
@@ -52,12 +58,15 @@ int	bresenham_line_counter(t_line line)
 		counter++;
 		if (line.from.x == line.to.x && line.from.y == line.to.y)
 			break ;
-		process_bresenham_calc(&line, d, &err);
+		err = process_bresenham_calc(&line, d, err);
 	}
 	return (counter);
 }
 
-void	bresenham_line(t_all *all, t_grid_pos cell_from, t_grid_pos cell_to)
+/**
+ * @brief Draw a line between two cells of the map using the Bresenham algorithm
+ */
+void	bresenham_line(t_param *param, t_grid_pos cell_from, t_grid_pos cell_to)
 {
 	t_pos			d;
 	int				err;
@@ -65,20 +74,20 @@ void	bresenham_line(t_all *all, t_grid_pos cell_from, t_grid_pos cell_to)
 	t_line			line;
 	t_step_colors	step;
 
-	line.from = all->map.pos2d[cell_from.row][cell_from.col];
-	line.to = all->map.pos2d[cell_to.row][cell_to.col];
-	step = calc_step_colors(all, cell_from, cell_to);
+	line.from = param->map.pos2d[cell_from.row][cell_from.col];
+	line.to = param->map.pos2d[cell_to.row][cell_to.col];
+	step = calc_step_colors(param, cell_from, cell_to);
 	d.x = abs(line.to.x - line.from.x);
 	d.y = abs(line.to.y - line.from.y);
 	err = d.x - d.y;
 	i = 0;
 	while (1)
 	{
-		my_mlx_pixel_put(&all->img, line.from, rgb_to_int(calc_color(all,
+		my_mlx_pixel_put(&param->img, line.from, rgb_to_int(calc_color(param,
 					cell_from, i, step)));
 		if (line.from.x == line.to.x && line.from.y == line.to.y)
 			break ;
-		process_bresenham_calc(&line, d, &err);
+		err = process_bresenham_calc(&line, d, err);
 		i++;
 	}
 }

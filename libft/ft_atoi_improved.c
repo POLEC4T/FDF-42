@@ -1,29 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atoi_improved.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:44:45 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/13 16:57:16 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/19 14:21:09 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
-int	ft_atoi(const char *nptr)
+int	ft_is_out_of_range(unsigned long res, int sign, int *is_out_of_range)
+{
+	if (sign == 1 && res > (unsigned long)INT_MAX)
+	{
+		*is_out_of_range = 1;
+		return (1);
+	}
+	if (sign == -1 && res > (unsigned long)INT_MAX + 1)
+	{
+		*is_out_of_range = 1;
+		return (1);
+	}
+	return (0);
+}
+
+int	ft_atoi_improved(const char *nptr, int *is_out_of_range)
 {
 	int				i;
 	int				sign;
 	unsigned long	res;
-	unsigned long	limit;
-	int				to_add;
 
 	i = 0;
 	sign = 1;
 	res = 0;
-	limit = (unsigned long)(__LONG_MAX__ / 10);
+	is_out_of_range = 0;
 	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
 		i++;
 	if (nptr[i] == '-' || nptr[i] == '+')
@@ -31,12 +45,9 @@ int	ft_atoi(const char *nptr)
 			sign = -1;
 	while (nptr[i] >= '0' && nptr[i] <= '9')
 	{
-		to_add = nptr[i++] - '0';
-		if (sign == 1 && (res > limit || (res == limit && to_add > 7)))
-			return (-1);
-		else if (sign == -1 && (res > limit || (res == limit && to_add > 8)))
+		res = res * 10 + nptr[i++] - '0';
+		if (ft_is_out_of_range(res, sign, is_out_of_range))
 			return (0);
-		res = res * 10 + to_add;
 	}
 	return (res * sign);
 }

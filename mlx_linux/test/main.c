@@ -105,7 +105,7 @@ int	main()
   if (!(mlx = mlx_init()))
     {
       printf(" !! KO !!\n");
-      exit(1);
+      exit(EXIT_FAILURE);
     }
   printf("OK (use_xshm %d pshm_format %d)\n",((t_xvar *)mlx)->use_xshm,((t_xvar *)mlx)->pshm_format);
 
@@ -113,7 +113,7 @@ int	main()
   if (!(win1 = mlx_new_window(mlx,WIN1_SX,WIN1_SY,"Title1")))
     {
       printf(" !! KO !!\n");
-      exit(1);
+      exit(EXIT_FAILURE);
     }
   printf("OK\n");
 
@@ -131,7 +131,7 @@ int	main()
   if (!(im1 = mlx_new_image(mlx,IM1_SX,IM1_SY)))
     {
       printf(" !! KO !!\n");
-      exit(1);
+      exit(EXIT_FAILURE);
     }
   data1 = mlx_get_data_addr(im1,&bpp1,&sl1,&endian1);
   printf("OK (bpp1: %d, sizeline1: %d endian: %d type: %d)\n",bpp1,sl1,endian1,
@@ -155,7 +155,7 @@ int	main()
   if (!(im3 = mlx_new_image(mlx,IM3_SX,IM3_SY)))
     {
       printf(" !! KO !!\n");
-      exit(1);
+      exit(EXIT_FAILURE);
     }
   data3 = mlx_get_data_addr(im3,&bpp3,&sl3,&endian3);
   printf("OK (bpp3 %d, sizeline3 %d endian3 %d type %d)\n",bpp3,sl3,endian3,
@@ -180,7 +180,7 @@ int	main()
   if (!(im2 = mlx_xpm_file_to_image(mlx,"open.xpm",&xpm1_x,&xpm1_y)))
     {
       printf(" !! KO !!\n");
-      exit(1);
+      exit(EXIT_FAILURE);
     }
   data2 = mlx_get_data_addr(im2,&bpp2,&sl2,&endian2);
   printf("OK (xpm %dx%d)(img bpp2: %d, sizeline2: %d endian: %d type: %d)\n",
@@ -198,7 +198,7 @@ int	main()
   if (!(im4 = mlx_new_image(mlx,IM3_SX, IM3_SY)))
     {
       printf(" !! KO !!\n");
-      exit(1);
+      exit(EXIT_FAILURE);
     }
   data4 = mlx_get_data_addr(im4,&bpp4,&sl4,&endian4);
   color_map_2(data4,bpp4,sl4,IM3_SX,IM3_SY,endian4, 2);

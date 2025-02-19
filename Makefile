@@ -6,18 +6,19 @@ CC=cc
 CFLAGS=-Wall -Wextra -Werror -I$(INCDIR) -I/usr/include -Imlx_linux -O3
 
 SRCS =	$(SRCDIR)/main.c \
-		$(SRCDIR)/hooks.c \
 		$(SRCDIR)/map_parsing.c \
 		$(SRCDIR)/frees.c \
-		$(SRCDIR)/utils.c \
-		$(SRCDIR)/utils_inits.c \
-		$(SRCDIR)/utils_color.c \
 		$(SRCDIR)/3d_rotates.c \
-		$(SRCDIR)/exit.c \
+		$(SRCDIR)/utils.c \
+		$(SRCDIR)/utils_color.c \
+		$(SRCDIR)/utils_exit.c \
+		$(SRCDIR)/utils_exit2.c \
+		$(SRCDIR)/utils_str.c \
 		$(SRCDIR)/bresenham.c \
 		$(SRCDIR)/my_mlx.c \
 		$(SRCDIR)/display.c \
-		$(SRCDIR)/inits.c
+		$(SRCDIR)/init_map.c \
+		$(SRCDIR)/init_map2.c
 
 
 OBJS = ${SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o}

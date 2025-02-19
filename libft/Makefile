@@ -1,4 +1,4 @@
-SRC = ${DIRSRC}ft_atoi.c \
+SRC = ${DIRSRC}ft_atoi_improved.c \
 	  ${DIRSRC}ft_atoui_base.c \
 	  ${DIRSRC}ft_bzero.c \
 	  ${DIRSRC}ft_calloc.c \

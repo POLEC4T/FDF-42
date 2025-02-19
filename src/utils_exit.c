@@ -1,46 +1,62 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   utils_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:26:16 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/14 19:08:28 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:14:06 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
-void	end_process(t_all *all, enum e_msg_ids msg_id)
+void	end_process(t_param *param, enum e_msg_ids msg_id)
 {
-	free_mlx(all);
-	free_colors(&all->map, all->map.nb_rows);
-	free_heights(&all->map, all->map.nb_rows);
-	free_pos2d(&all->map, all->map.nb_rows);
+	free_mlx(param);
+	free_colors(&param->map, param->map.nb_rows);
+	free_heights(&param->map, param->map.nb_rows);
+	free_pos2d(&param->map, param->map.nb_rows);
+	free(param->map.row_len);
 	print_msg(msg_id);
 	exit_acc_to_msg_id(msg_id);
 }
 
-int	exit_cross(t_all *all)
+int	exit_cross(t_param *param)
 {
-	end_process(all, SUCCESS_EXIT_CROSS);
+	end_process(param, SUCCESS_EXIT_CROSS);
 	return (0);
 }
 
-void	exit_invalid_map(char *line, char **str_heights)
+int	key_hook_func(int keycode, t_param *param)
 {
-	free(line);
-	free_tab_str(str_heights);
-	print_msg(ERROR_INV_MAP);
-	exit(1);
+	if (keycode == 65307)
+		end_process(param, SUCCESS_EXIT_ESC);
+	return (0);
 }
 
+void	exit_invalid_map(char *line, char **str_heights, int fd)
+{
+	if (str_heights)
+		free(line);
+	if (str_heights)
+		free_tab_str(str_heights);
+	if (fd != -1)
+		close(fd);
+	print_msg(ERROR_INV_MAP);
+	exit(EXIT_FAILURE);
+}
+
+/**
+ * @brief Exit the program with the appropriate 
+ * mode (success or error) according to the message id
+ */
 void	exit_acc_to_msg_id(enum e_msg_ids id)
 {
 	if (id == ERROR_INV_MAP || id == ERROR_NO_FILE || id == ERROR_MALLOC_BROKE
 		|| id == ERROR_NO_MAP || id == ERROR_TOO_MANY_ARGS)
-		exit(1);
+		exit(EXIT_FAILURE);
 	else if (id == SUCCESS_EXIT_ESC || SUCCESS_EXIT_CROSS)
-		exit(0);
+		exit(EXIT_SUCCESS);
 }

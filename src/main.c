@@ -6,15 +6,34 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 11:18:40 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/14 18:55:12 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:14:11 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
+void	print_map_terminal(t_map map)
+{
+	int	row;
+	int	col;
+
+	row = 0;
+	while (row < map.nb_rows)
+	{
+		col = 0;
+		while (col < map.row_len[row])
+		{
+			__builtin_printf("%d ", map.heights[row][col]);
+			col++;
+		}
+		__builtin_printf("\n");
+		row++;
+	}
+}
+
 int	main(int ac, char **av)
 {
-	t_all	all;
+	t_param	param;
 	t_map	map;
 
 	if (ac != 2)
@@ -23,15 +42,16 @@ int	main(int ac, char **av)
 			print_msg(ERROR_NO_MAP);
 		else
 			print_msg(ERROR_TOO_MANY_ARGS);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	check_map(av[1], &map);
 	init_map(&map, av[1]);
-	my_init_mlx(&all);
-	all.map = map;
-	display_plan(&all);
-	mlx_put_image_to_window(all.vars.mlx, all.vars.win, all.img.img, 0, 0);
-	mlx_key_hook(all.vars.win, key_hook_func, &all);
-	mlx_hook(all.vars.win, 17, 0, exit_cross, &all);
-	mlx_loop(all.vars.mlx);
+	my_init_mlx(&param);
+	param.map = map;
+	display_plan(&param);
+	mlx_put_image_to_window(param.vars.mlx, param.vars.win, param.img.img, 0,
+		0);
+	mlx_key_hook(param.vars.win, key_hook_func, &param);
+	mlx_hook(param.vars.win, 17, 0, exit_cross, &param);
+	mlx_loop(param.vars.mlx);
 }
