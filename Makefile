@@ -1,6 +1,8 @@
 SRCDIR=src
 INCDIR=include
 OBJDIR=.obj
+PATH_MLX=mlx_linux
+PATH_LIBFT=libft
 
 CC=cc
 CFLAGS=-Wall -Wextra -Werror -I$(INCDIR) -I/usr/include -Imlx_linux -O3
@@ -29,7 +31,8 @@ NAME=fdf
 all: $(NAME)
 
 $(NAME): $(OBJS) Makefile
-	$(MAKE) -C libft
+	$(MAKE) -C $(PATH_LIBFT)
+	$(MAKE) -C $(PATH_MLX)
 	$(CC) $(OBJS) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz ./libft/libft.a -o $(NAME) -g
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCDIR)/fdf.h | $(OBJDIR)
@@ -40,6 +43,7 @@ $(OBJDIR):
 
 clean:
 	$(MAKE) -C libft clean
+	$(MAKE) -C $(PATH_MLX) clean
 	rm -rf $(OBJDIR)
 
 fclean: 
