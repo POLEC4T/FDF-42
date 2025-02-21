@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:58:55 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/21 10:46:44 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/21 14:33:29 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ int	strtab_len_valid_elems(char **strtab)
 	return (count);
 }
 
+/**
+ * @returns 1 if to_find is at the end of str, 0 otherwise
+ */
 int	end_with(char *str, char *to_find)
 {
 	int	i;

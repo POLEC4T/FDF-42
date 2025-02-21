@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 20:01:43 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/19 18:52:41 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/21 14:38:21 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ int	iterate_hex_part(char *str)
 	return (i);
 }
 
+/**
+ * @brief element must contain a number,
+ * 	and optionally a hex color (separated by a comma)
+ */
 int	is_element_valid(char *str)
 {
 	int	i_nb;

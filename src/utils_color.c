@@ -6,17 +6,23 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:24:38 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/18 10:57:40 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/21 14:32:39 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
+/**
+ * @brief Convert a t_color struct to an int color
+ */
 int	rgb_to_int(t_color color)
 {
 	return ((color.r << 16) + (color.g << 8) + color.b);
 }
 
+/**
+ * @brief Convert an int color to a t_color struct
+ */
 t_color	int_to_rgb(int color)
 {
 	t_color	rgb;
