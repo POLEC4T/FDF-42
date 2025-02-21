@@ -1,54 +1,57 @@
-SRCDIR=src
-INCDIR=include
-OBJDIR=.obj
-PATH_MLX=mlx_linux
-PATH_LIBFT=libft
+SRC_DIR=src
+INC_DIR=include
+OBJ_DIR=.obj
+MLX_DIR=mlx_linux
+LIBFT_DIR=libft
 
 CC=cc
-CFLAGS=-Wall -Wextra -Werror -I$(INCDIR) -I/usr/include -Imlx_linux -O3
+CFLAGS=-Wall -Wextra -Werror -I$(INC_DIR) -I/usr/include -Imlx_linux -O3
 
-SRCS =	$(SRCDIR)/main.c \
-		$(SRCDIR)/map_parsing.c \
-		$(SRCDIR)/frees.c \
-		$(SRCDIR)/frees2.c \
-		$(SRCDIR)/3d_rotates.c \
-		$(SRCDIR)/utils.c \
-		$(SRCDIR)/utils_color.c \
-		$(SRCDIR)/utils_exit.c \
-		$(SRCDIR)/utils_exit2.c \
-		$(SRCDIR)/utils_str.c \
-		$(SRCDIR)/bresenham.c \
-		$(SRCDIR)/my_mlx.c \
-		$(SRCDIR)/display.c \
-		$(SRCDIR)/init_map.c \
-		$(SRCDIR)/init_map2.c
+SRCS =	$(SRC_DIR)/main.c \
+		$(SRC_DIR)/map_parsing.c \
+		$(SRC_DIR)/frees.c \
+		$(SRC_DIR)/frees2.c \
+		$(SRC_DIR)/3d_rotates.c \
+		$(SRC_DIR)/utils.c \
+		$(SRC_DIR)/utils_color.c \
+		$(SRC_DIR)/utils_exit.c \
+		$(SRC_DIR)/utils_exit2.c \
+		$(SRC_DIR)/utils_str.c \
+		$(SRC_DIR)/bresenham.c \
+		$(SRC_DIR)/my_mlx.c \
+		$(SRC_DIR)/display.c \
+		$(SRC_DIR)/init_map.c \
+		$(SRC_DIR)/init_map2.c
 
 
-OBJS = ${SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o}
+OBJS = ${SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o}
 
 NAME=fdf
 
-all: $(NAME)
+all: libs $(NAME)
+
+libs:
+	$(MAKE) -C $(LIBFT_DIR)
+	$(MAKE) -C $(MLX_DIR)
 
 $(NAME): $(OBJS) Makefile
-	$(MAKE) -C $(PATH_LIBFT)
-	$(MAKE) -C $(PATH_MLX)
-	$(CC) $(OBJS) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz ./libft/libft.a -o $(NAME) -g
+	$(CC) $(OBJS) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz $(LIBFT_DIR)/libft.a -o $(NAME) -g
 
-$(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCDIR)/fdf.h | $(OBJDIR)
+$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c $(INC_DIR)/fdf.h | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@ -g
 
-$(OBJDIR):
-	mkdir -p $(OBJDIR)
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
 
 clean:
-	$(MAKE) -C libft clean
-	$(MAKE) -C $(PATH_MLX) clean
-	rm -rf $(OBJDIR)
+	$(MAKE) -C $(LIBFT_DIR) clean
+	$(MAKE) -C $(MLX_DIR) clean
+	rm -rf $(OBJ_DIR)
 
 fclean: 
-	$(MAKE) -C libft fclean
-	rm -rf $(OBJDIR) $(NAME)
+	$(MAKE) -C $(LIBFT_DIR) fclean
+	$(MAKE) -C $(MLX_DIR) clean
+	rm -rf $(OBJ_DIR) $(NAME)
 
 re : fclean all
 
