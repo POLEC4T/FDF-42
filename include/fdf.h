@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 11:17:59 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/19 19:40:50 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/21 10:40:17 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,5 +144,8 @@ int				end_with(char *str, char *to_find);
 void			allocate_map_vars(t_map *map);
 void			allocate_map_lines(t_map *map, char **str_line_elems,
 					char **lines, int row_elems);
+void			free_map_vars(t_map *map, int limit);
+void			exit_out_of_range_error(char **lines, char **str_line_elems,
+					t_map *map, int row_elems);
 
 #endif

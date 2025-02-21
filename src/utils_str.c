@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:58:55 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/18 15:00:23 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/21 10:46:44 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,19 @@ int	strtab_len_valid_elems(char **strtab)
 	return (count);
 }
 
-int end_with(char *str, char *to_find)
+int	end_with(char *str, char *to_find)
 {
-    int i;
-    int j;
+	int	i;
+	int	j;
 
-    i = ft_strlen(str) - 1;
-    j = ft_strlen(to_find) - 1;
-    while (j >= 0)
-    {
-        if (str[i] != to_find[j])
-            return (0);
-        i--;
-        j--;
-    }
-    return (1);
+	i = ft_strlen(str) - 1;
+	j = ft_strlen(to_find) - 1;
+	while (j >= 0)
+	{
+		if (str[i] != to_find[j])
+			return (0);
+		i--;
+		j--;
+	}
+	return (1);
 }

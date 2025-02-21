@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 17:50:13 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/19 19:40:17 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/21 10:48:37 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	allocate_map_vars(t_map *map)
 void	allocate_map_lines(t_map *map, char **str_line_elems, char **lines,
 		int row_elems)
 {
-	map->heights[row_elems] = ft_calloc((strtab_len_valid_elems(str_line_elems)),
-			sizeof(int));
+	map->heights[row_elems] = ft_calloc(
+			(strtab_len_valid_elems(str_line_elems)), sizeof(int));
 	if (!map->heights[row_elems])
 		exit_alloc_error(lines, str_line_elems, map, row_elems);
 	map->colors[row_elems] = ft_calloc(strtab_len_valid_elems(str_line_elems),

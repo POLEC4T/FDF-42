@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:26:16 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/19 17:14:06 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/21 10:31:15 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	key_hook_func(int keycode, t_param *param)
 
 void	exit_invalid_map(char *line, char **str_heights, int fd)
 {
-	if (str_heights)
+	if (line)
 		free(line);
 	if (str_heights)
 		free_tab_str(str_heights);

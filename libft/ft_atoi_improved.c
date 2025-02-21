@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:44:45 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/19 14:21:09 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/21 10:27:14 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_atoi_improved(const char *nptr, int *is_out_of_range)
 	i = 0;
 	sign = 1;
 	res = 0;
-	is_out_of_range = 0;
+	*is_out_of_range = 0;
 	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
 		i++;
 	if (nptr[i] == '-' || nptr[i] == '+')
