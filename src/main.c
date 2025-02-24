@@ -6,30 +6,11 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 11:18:40 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/19 17:14:11 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/24 10:44:44 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
-
-void	print_map_terminal(t_map map)
-{
-	int	row;
-	int	col;
-
-	row = 0;
-	while (row < map.nb_rows)
-	{
-		col = 0;
-		while (col < map.row_len[row])
-		{
-			__builtin_printf("%d ", map.heights[row][col]);
-			col++;
-		}
-		__builtin_printf("\n");
-		row++;
-	}
-}
 
 int	main(int ac, char **av)
 {
