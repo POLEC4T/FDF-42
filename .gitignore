@@ -7,3 +7,4 @@ fdf
 *.o
 *.a
 .vscode
+test.mk
