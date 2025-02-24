@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mniemaz <mniemaz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:21:28 by mniemaz           #+#    #+#             */
-/*   Updated: 2024/11/14 14:28:27 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/21 16:56:50 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,3 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	ft_bzero(mem, nmemb * size);
 	return (mem);
 }
-
-// #include <stdio.h>
-// int	main(void)
-// {
-// 	// char *s = calloc(3, -1);
-// 	char *s = ft_calloc(0, 0);
-// 	printf("%p\n", s);
-// 	return (0);
-// }
