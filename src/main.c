@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 11:18:40 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/24 10:44:44 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/24 19:09:23 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	main(int ac, char **av)
 	}
 	check_map(av[1], &map);
 	init_map(&map, av[1]);
-	my_init_mlx(&param);
 	param.map = map;
+	my_init_mlx(&param);
 	display_plan(&param);
 	mlx_put_image_to_window(param.vars.mlx, param.vars.win, param.img.img, 0,
 		0);
