@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:39:07 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/24 13:05:26 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/24 15:20:34 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	process_bresenham_calc(t_line *line, t_pos d, int err)
 	return (err);
 }
 
-static void init_err_and_d(t_line line, t_pos *d, int *err)
+static void	init_err_and_d(t_line line, t_pos *d, int *err)
 {
 	d->x = ft_abs((line.to.x - line.from.x));
 	d->y = ft_abs((line.to.y - line.from.y));
@@ -67,8 +67,6 @@ int	bresenham_line_counter(t_line line)
 	}
 	return (counter);
 }
-
-
 
 /**
  * @brief Draw a line between two cells of the map using the Bresenham algorithm

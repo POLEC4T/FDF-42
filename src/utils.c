@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:59:05 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/24 12:54:12 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/24 15:19:54 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	get_max_row_len(t_map *map)
 	return (max);
 }
 
-int ft_abs(int a)
+int	ft_abs(int a)
 {
 	if (a < 0)
 		return (-a);
