@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 11:17:59 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/21 10:40:17 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/21 17:53:22 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # define WIN_SIZE_Y 2000
 # define MAX_HEX_LEN 8
 # define M_PI 3.14159265358979323846
+
+# define ABS(x) ((x < 0) * -x + (x >= 0) * x)
 
 enum			e_msg_ids
 {
@@ -119,7 +121,6 @@ void			free_mlx(t_param *param);
 void			free_colors(t_map *map, int limit);
 void			free_pos2d(t_map *map, int limit);
 void			init_map(t_map *map, char *filename);
-int				open_map_file(char *filename);
 void			exit_alloc_error(char **lines, char **str_line_elems,
 					t_map *map, int row_elems);
 int				rgb_to_int(t_color color);
