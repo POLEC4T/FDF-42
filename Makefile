@@ -5,7 +5,7 @@ MLX_DIR=mlx_linux
 LIBFT_DIR=libft
 
 CC=cc
-CFLAGS=-Wall -Wextra -Werror -I$(INC_DIR) -I/usr/include -Imlx_linux -O3
+CFLAGS=-Wall -Wextra -Werror -I$(INC_DIR) -I$(MLX_DIR)
 
 SRCS =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/map_parsing.c \
@@ -31,14 +31,14 @@ NAME=fdf
 all: libs $(NAME)
 
 libs:
-	$(MAKE) -C $(LIBFT_DIR)
-	$(MAKE) -C $(MLX_DIR)
+	@$(MAKE) -C $(LIBFT_DIR)
+	@$(MAKE) -C $(MLX_DIR)
 
 $(NAME): $(OBJS) Makefile
-	$(CC) $(OBJS) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz $(LIBFT_DIR)/libft.a -o $(NAME) -g
+	$(CC) $(OBJS) -L$(MLX_DIR) -lmlx_Linux -I$(MLX_DIR) -lXext -lX11 -lm $(LIBFT_DIR)/libft.a -o $(NAME)
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c $(INC_DIR)/fdf.h | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@ -g
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
