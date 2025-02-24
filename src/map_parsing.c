@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 20:01:43 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/21 17:53:09 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/24 19:54:14 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	process_check_line(char *line, t_map *map, int fd)
 	}
 	if (strtab_len_valid_elems(str_heights) != strtab_len(str_heights)
 		|| strtab_len_valid_elems(str_heights) == 0)
-		exit_invalid_map(line, str_heights, -1);
+		exit_invalid_map(line, str_heights, fd);
 	map->nb_rows++;
 	free_tab_str(str_heights);
 }
@@ -87,8 +87,8 @@ void	process_check_line(char *line, t_map *map, int fd)
 /**
  * @brief
  * - Check the map file, the file is invalid if:
- * 	- a line has a different number of columns than the previous one
  * 	- a line has an invalid element (see function is_element_valid)
+ *  - a line is empty
  * - Set the sizes of the map (nb_rows) and the row_len
  */
 void	check_map(char *filename, t_map *map)
@@ -103,6 +103,8 @@ void	check_map(char *filename, t_map *map)
 	if (fd < 0)
 		exit_perror("Error opening file");
 	line = get_next_line(fd);
+	if (!line)
+		exit_invalid_map(NULL, NULL, fd);
 	while (line)
 	{
 		process_check_line(line, map, fd);

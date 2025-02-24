@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:59:05 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/24 15:19:54 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/24 19:49:01 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	get_max_row_len(t_map *map)
 	int	max;
 
 	i = 0;
-	max = 0;
+	max = 1;
 	while (i < map->nb_rows)
 	{
 		if (map->row_len[i] > max)
