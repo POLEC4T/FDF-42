@@ -6,5 +6,6 @@ fdf
 *.out
 *.o
 *.a
+*.fdf
 .vscode
 test.mk
