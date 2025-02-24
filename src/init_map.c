@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 17:50:13 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/21 10:47:29 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/21 17:53:35 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	init_map(t_map *map, char *filename)
 	lines = malloc(sizeof(char *) * (map->nb_rows + 1));
 	if (!lines)
 		exit_perror("Error alloc");
-	fd = open_map_file(filename);
+	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		exit_perror("Error opening file");
 	row_elems = 0;

@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 20:01:43 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/21 14:38:21 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/21 17:53:09 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	check_map(char *filename, t_map *map)
 	map->nb_rows = 0;
 	if (!end_with(filename, ".fdf"))
 		exit_invalid_map(NULL, NULL, -1);
-	fd = open_map_file(filename);
+	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		exit_perror("Error opening file");
 	line = get_next_line(fd);
