@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:59:05 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/21 17:53:27 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/24 11:10:01 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,6 @@ void	print_msg(enum e_msg_ids id)
 		write(1, "Successfully exited with top right cross.\n", 42);
 	if (id == ERROR_INV_MAP)
 		write(2, "Error: The provided map is invalid.\n", 37);
-	if (id == ERROR_INV_MAP_ROW_LEN)
-		write(2, "Error: The provided map has invalid row lengths.\n", 50);
-	if (id == ERROR_NO_FILE)
-		write(2, "Error: The provided file does not exist.\n", 41);
-	if (id == ERROR_MALLOC_BROKE)
-		write(2, "Error: A malloc broke, crazy in'it ?\n", 36);
 	if (id == ERROR_NO_MAP)
 		write(2, "Error: Please provide a map file.\n", 34);
 	if (id == ERROR_TOO_MANY_ARGS)

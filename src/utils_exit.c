@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:26:16 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/21 10:31:15 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/02/24 11:09:57 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	exit_invalid_map(char *line, char **str_heights, int fd)
  */
 void	exit_acc_to_msg_id(enum e_msg_ids id)
 {
-	if (id == ERROR_INV_MAP || id == ERROR_NO_FILE || id == ERROR_MALLOC_BROKE
+	if (id == ERROR_INV_MAP || id
 		|| id == ERROR_NO_MAP || id == ERROR_TOO_MANY_ARGS)
 		exit(EXIT_FAILURE);
 	else if (id == SUCCESS_EXIT_ESC || SUCCESS_EXIT_CROSS)
