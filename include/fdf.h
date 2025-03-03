@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 11:17:59 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/03/03 10:14:29 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/03/03 16:03:59 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define WIN_SIZE_Y 2000
 # define MAX_HEX_LEN 8
 # define M_PI 3.14159265358979323846
+# define HEX_BASE "0123456789ABCDEF"
 
 enum			e_msg_ids
 {

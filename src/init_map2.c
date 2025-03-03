@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 17:50:13 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/21 10:48:37 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/03/03 15:32:06 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	allocate_map_vars(t_map *map)
 		free(map->heights);
 		exit_perror("Error alloc");
 	}
-	map->row_len = ft_calloc(sizeof(int), map->nb_rows);
+	map->row_len = ft_calloc(sizeof(t_pos *), map->nb_rows);
 	if (!map->row_len)
 	{
 		free(map->pos2d);

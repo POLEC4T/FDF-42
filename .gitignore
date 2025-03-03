@@ -9,3 +9,4 @@ fdf
 *.fdf
 .vscode
 test.mk
+*checker*
