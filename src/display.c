@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:55:26 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/24 19:48:53 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/03/03 10:14:36 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	prepare_map_2d(t_param *param)
 				* param->map.step;
 			param->map.pos2d[row][col].y = param->map.origin.y + row
 				* param->map.step;
-			z_rotate(&param->map.pos2d[row][col], M_PI / 6, param);
+			z_rotate(&param->map.pos2d[row][col], M_PI / 6);
 			x_rotate(&param->map.pos2d[row][col], &param->map.heights[row][col],
 				M_PI / 4, param);
 			col++;

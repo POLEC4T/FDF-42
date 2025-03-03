@@ -37,7 +37,7 @@ libs:
 $(NAME): $(OBJS)
 	$(CC) $(OBJS) -L$(MLX_DIR) -lmlx_Linux -I$(MLX_DIR) -lXext -lX11 -lm $(LIBFT_DIR)/libft.a -o $(NAME)
 
-$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c $(INC_DIR)/fdf.h Makefile | $(OBJ_DIR)
+$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c $(INC_DIR)/fdf.h Makefile $(LIBFT_DIR)/libft.a | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR):

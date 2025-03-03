@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 11:17:59 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/24 15:21:22 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/03/03 10:14:29 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void			exit_alloc_error(char **lines, char **str_line_elems,
 					t_map *map, int row_elems);
 int				rgb_to_int(t_color color);
 t_color			int_to_rgb(int color);
-void			z_rotate(t_pos *pos, double angle, t_param *param);
+void			z_rotate(t_pos *pos, double angle);
 void			x_rotate(t_pos *pos, int *height, double angle, t_param *param);
 t_step_colors	calc_step_colors(t_param *param, t_grid_pos pos1,
 					t_grid_pos pos2);

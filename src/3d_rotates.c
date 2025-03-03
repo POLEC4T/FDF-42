@@ -6,19 +6,18 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:01:28 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/19 12:48:56 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/03/03 10:14:25 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
-void	z_rotate(t_pos *pos, double angle, t_param *param)
+void	z_rotate(t_pos *pos, double angle)
 {
 	double	x;
 	double	y;
 	t_pos	dist_to_origin;
 
-	(void)param;
 	dist_to_origin.x = WIN_SIZE_X / 2;
 	dist_to_origin.y = WIN_SIZE_Y / 2;
 	x = pos->x - dist_to_origin.x;

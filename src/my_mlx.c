@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:48:41 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/02/24 19:39:49 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/03/03 10:21:24 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	my_mlx_pixel_put(t_data *data, t_pos pos, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	exit_mlx_error(t_param *param, int err_level)
+static void	exit_mlx_error(t_param *param, int err_level)
 {
 	if (err_level >= 2)
 		mlx_destroy_window(param->vars.mlx, param->vars.win);
