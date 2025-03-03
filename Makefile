@@ -28,16 +28,18 @@ OBJS = ${SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o}
 
 NAME=fdf
 
+.PHONY : all libs clean fclean re
+
 all: libs $(NAME)
+
+$(NAME): $(OBJS) $(LIBFT_DIR)/libft.a
+	$(CC) $(OBJS) -L$(MLX_DIR) -lmlx_Linux -I$(MLX_DIR) -lXext -lX11 -lm $(LIBFT_DIR)/libft.a -o $(NAME)
 
 libs:
 	@$(MAKE) -C $(LIBFT_DIR)
 	@$(MAKE) -C $(MLX_DIR)
 
-$(NAME): $(OBJS)
-	$(CC) $(OBJS) -L$(MLX_DIR) -lmlx_Linux -I$(MLX_DIR) -lXext -lX11 -lm $(LIBFT_DIR)/libft.a -o $(NAME)
-
-$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c $(INC_DIR)/fdf.h Makefile $(LIBFT_DIR)/libft.a | $(OBJ_DIR)
+$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c $(INC_DIR)/fdf.h Makefile | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR):
@@ -54,5 +56,3 @@ fclean:
 	rm -rf $(OBJ_DIR) $(NAME)
 
 re : fclean all
-
-.PHONY : all clean fclean re
